@@ -1,6 +1,5 @@
 # Ignore compiled binaries 
 
 dist/
-cmd/main
-main
 /vendor
+.idea
