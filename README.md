@@ -1,14 +1,5 @@
 # ![SMTP mock server written on Golang. Mimic any SMTP server behavior for your test environment with fake SMTP server](https://repository-images.githubusercontent.com/401721985/848bc1dd-fc35-4d78-8bd9-0ac3430270d8)
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/mocktools/go-smtp-mock/v2)](https://goreportcard.com/report/github.com/mocktools/go-smtp-mock/v2)
-[![Codecov](https://codecov.io/gh/mocktools/go-smtp-mock/branch/master/graph/badge.svg)](https://codecov.io/gh/mocktools/go-smtp-mock)
-[![CircleCI](https://circleci.com/gh/mocktools/go-smtp-mock/tree/master.svg?style=svg)](https://circleci.com/gh/mocktools/go-smtp-mock/tree/master)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/mocktools/go-smtp-mock)](https://github.com/mocktools/go-smtp-mock/releases)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/mocktools/go-smtp-mock/v2)](https://pkg.go.dev/github.com/mocktools/go-smtp-mock/v2)
-[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)
-[![GitHub](https://img.shields.io/github/license/mocktools/go-smtp-mock)](LICENSE.txt)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
-
 `smtpmock` is lightweight configurable multithreaded fake SMTP server written in Go. It meets the minimum requirements specified by [RFC 2821](https://datatracker.ietf.org/doc/html/rfc2821) & [RFC 5321](https://datatracker.ietf.org/doc/html/rfc5321). Allows to mimic any SMTP server behavior for your test environment and even more 🚀
 
 ## Table of Contents
@@ -52,27 +43,6 @@
 - Ability to access to server messages
 - Simple and intuitive DSL
 - Ability to run server as binary with command line arguments
-
-## Requirements
-
-Golang 1.15+
-
-## Installation
-
-Install `smtpmock`:
-
-```bash
-go get github.com/mocktools/go-smtp-mock/v2
-go install github.com/mocktools/go-smtp-mock/v2
-```
-
-Import `smtpmock` dependency into your code:
-
-```go
-package main
-
-import smtpmock "github.com/mocktools/go-smtp-mock/v2"
-```
 
 ## Usage
 
@@ -349,103 +319,6 @@ WARNING: 2021/11/30 22:07:30.555801 SMTP mock server is in the shutdown mode and
 INFO: 2021/11/30 22:07:30.555808 SMTP mock server was stopped successfully
 ```
 
-### Inside of Ruby ecosystem
-
-In Ruby ecosystem `smtpmock` is available as [`smtp_mock`](https://github.com/mocktools/ruby-smtp-mock) gem. It's flexible Ruby wrapper over `smtpmock` binary.
-
-#### Example of usage
-
-First, you should install `smtp_mock` gem and `smtpmock` as system dependency:
-
-```bash
-gem install smtp_mock
-bundle exec smtp_mock -i ~
-```
-
-Now, you can create and interact with your `smtpmock` instance natively from Ruby ecosystem. It comes with default settings out of the box. Configure only what you need, for example:
-
-```ruby
-require 'smtp_mock'
-
-# List of all available server options:
-# https://github.com/mocktools/ruby-smtp-mock#available-server-options
-smtp_mock_server = SmtpMock.start_server(not_registered_emails: %w[user@olo.com user@molo.com])
-
-# returns current smtp mock server port
-smtp_mock_server.port # => 55640
-
-# interface for force shutdown current smtp mock server
-smtp_mock_server.stop! # => true
-```
-
-### Inside of any ecosystem
-
-You can use `smtpmock` as binary. Just download the pre-compiled binary from the [releases page](https://github.com/mocktools/go-smtp-mock/releases) and copy them to the desired location. For start server run command with needed arguments. You can use our bash script for automation this process like in the example below:
-
-```bash
-curl -sL https://raw.githubusercontent.com/mocktools/go-smtp-mock/master/script/download.sh | bash
-./smtpmock -port=2525 -log
-```
-
-#### Configuring with command line arguments
-
-`smtpmock` configuration is available as command line arguments specified in the list below:
-
-| Flag description | Example of usage |
-| --- | --- |
-| `-host` - host address where smtpmock will run. It's equal to `127.0.0.1` by default | `-host=localhost` |
-| `-port` - server port number. If not specified it will be assigned dynamically | `-port=2525` |
-| `-log` - enables log server activity. Disabled by default | `-log` |
-| `-sessionTimeout` - session timeout in seconds. It's equal to 30 seconds by default | `-sessionTimeout=60` |
-| `-shutdownTimeout` - graceful shutdown timeout in seconds. It's equal to 1 second by default | `-shutdownTimeout=5` |
-| `-failFast` - enables fail fast scenario. Disabled by default | `-failFast` |
-| `-multipleRcptto` - enables multiple `RCPT TO` receiving scenario. Disabled by default | `-multipleRcptto` |
-| `-multipleMessageReceiving` - enables multiple message receiving scenario. Disabled by default | `-multipleMessageReceiving` |
-| `-blacklistedHeloDomains` - blacklisted `HELO` domains, separated by commas | `-blacklistedHeloDomains="example1.com,example2.com"` |
-| `-blacklistedMailfromEmails` - blacklisted `MAIL FROM` emails, separated by commas | `-blacklistedMailfromEmails="a@example1.com,b@example2.com"` |
-| `-blacklistedRcpttoEmails` - blacklisted `RCPT TO` emails, separated by commas | `-blacklistedRcpttoEmails="a@example1.com,b@example2.com"` |
-| `-notRegisteredEmails` - not registered (non-existent) `RCPT TO` emails, separated by commas | `-notRegisteredEmails="a@example1.com,b@example2.com"` |
-| `-responseDelayHelo` - `HELO` response delay in seconds. It's equal to 0 seconds by default | `-responseDelayHelo=2` |
-| `-responseDelayMailfrom` - `MAIL FROM` response delay in seconds. It's equal to 0 seconds by default | `-responseDelayMailfrom=2` |
-| `-responseDelayRcptto` - `RCPT TO` response delay in seconds. It's equal to 0 seconds by default | `-responseDelayRcptto=2` |
-| `-responseDelayData` - `DATA` response delay in seconds. It's equal to 0 seconds by default | `-responseDelayData=2` |
-| `-responseDelayMessage` - Message response delay in seconds. It's equal to 0 seconds by default | `-responseDelayMessage=2` |
-| `-responseDelayRset` - `RSET` response delay in seconds. It's equal to 0 seconds by default | `-responseDelayRset=2` |
-| `-responseDelayQuit` - `QUIT` response delay in seconds. It's equal to 0 seconds by default | `-responseDelayQuit=2` |
-| `-msgSizeLimit` - message body size limit in bytes. It's equal to `10485760` bytes | `-msgSizeLimit=42` |
-| `-msgGreeting` - custom server greeting message | `-msgGreeting="Greeting message"` |
-| `-msgInvalidCmd` - custom invalid command message | `-msgInvalidCmd="Invalid command message"` |
-| `-msgInvalidCmdHeloSequence` - custom invalid command `HELO` sequence message | `-msgInvalidCmdHeloSequence="Invalid command HELO sequence message"` |
-| `-msgInvalidCmdHeloArg` - custom invalid command `HELO` argument message | `-msgInvalidCmdHeloArg="Invalid command HELO argument message"` |
-| `-msgHeloBlacklistedDomain` - custom `HELO` blacklisted domain message | `-msgHeloBlacklistedDomain="Blacklisted domain message"` |
-| `-msgHeloReceived` - custom `HELO` received message | `-msgHeloReceived="HELO received message"` |
-| `-msgInvalidCmdMailfromSequence` - custom invalid command `MAIL FROM` sequence message | `-msgInvalidCmdMailfromSequence="Invalid command MAIL FROM sequence message"` |
-| `-msgInvalidCmdMailfromArg` - custom invalid command `MAIL FROM` argument message | `-msgInvalidCmdMailfromArg="Invalid command MAIL FROM argument message"` |
-| `-msgMailfromBlacklistedEmail` - custom `MAIL FROM` blacklisted email message | `-msgMailfromBlacklistedEmail="Blacklisted email message"` |
-| `-msgMailfromReceived`- custom `MAIL FROM` received message | `-msgMailfromReceived="MAIL FROM received message"` |
-| `-msgInvalidCmdRcpttoSequence` - custom invalid command `RCPT TO` sequence message | `-msgInvalidCmdRcpttoSequence="Invalid command RCPT TO sequence message"` |
-| `-msgInvalidCmdRcpttoArg` - custom invalid command `RCPT TO` argument message | `-msgInvalidCmdRcpttoArg="Invalid command RCPT TO argument message"` |
-| `-msgRcpttoNotRegisteredEmail` - custom `RCPT TO` not registered email message | `-msgRcpttoNotRegisteredEmail="Not registered email message"` |
-| `-msgRcpttoBlacklistedEmail` - custom `RCPT TO` blacklisted email message | `-msgRcpttoBlacklistedEmail="Blacklisted email message"` |
-| `-msgRcpttoReceived` - custom `RCPT TO` received message | `-msgRcpttoReceived="RCPT TO received message"` |
-| `-msgInvalidCmdDataSequence` - custom invalid command `DATA` sequence message | `-msgInvalidCmdDataSequence="Invalid command DATA sequence message"` |
-| `-msgDataReceived` - custom `DATA` received message | `-msgDataReceived="DATA received message"` |
-| `-msgMsgSizeIsTooBig` - custom size is too big message | `-msgMsgSizeIsTooBig="Message size is too big"` |
-| `-msgMsgReceived` - custom received message body message | `-msgMsgReceived="Message has been received"` |
-| `-msgInvalidCmdRsetSequence` - custom invalid command `RSET` sequence message | `-msgInvalidCmdRsetSequence="Invalid command RSET sequence message"` |
-| `-msgInvalidCmdRsetArg` - custom invalid command `RSET` message | `-msgInvalidCmdRsetArg="Invalid command RSET message"` |
-| `-msgRsetReceived` - custom `RSET` received message | `-msgRsetReceived="RSET received message"` |
-| `-msgQuitCmd` - custom quit command message | `-msgQuitCmd="Quit command message"` |
-| `-msgNoopCmd` - custom NOOP command message | `-msgQuitCmd="NOOP command message"` |
-
-#### Other options
-
-Available not configuration `smtpmock` options:
-
-| Flag description | Example of usage |
-| --- | --- |
-| `-v` - Just prints current `smtpmock` binary build data (version, commit, datetime). Doesn't run the server. | `-v` |
-
 #### Stopping server
 
 `smtpmock` accepts 3 shutdown signals: `SIGINT`, `SIGQUIT`, `SIGTERM`.
@@ -464,24 +337,3 @@ Available not configuration `smtpmock` options:
 | `7` | `NOOP` | no | - | `NOOP` |
 
 Please note in case when same command used more the one time during same session all saved data upper this command will be erased.
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at <https://github.com/mocktools/go-smtp-mock>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Please check the [open tickets](https://github.com/mocktools/go-smtp-mock/issues). Be sure to follow Contributor Code of Conduct below and our [Contributing Guidelines](CONTRIBUTING.md).
-
-## License
-
-This golang package is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the `smtpmock` project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
-
-## Credits
-
-- [The Contributors](https://github.com/mocktools/go-smtp-mock/graphs/contributors) for code and awesome suggestions
-- [The Stargazers](https://github.com/mocktools/go-smtp-mock/stargazers) for showing their support
-
-## Versioning
-
-`smtpmock` uses [Semantic Versioning 2.0.0](https://semver.org)
